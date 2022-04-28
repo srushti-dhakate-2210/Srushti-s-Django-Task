@@ -23,7 +23,7 @@
 				</div>
 
 				<div class="url_options url_stats_o" id="1">
-					<p class="data_link">{{ date }}</p>
+					<p class="data_link">{{ last_visit }}</p>
 					<p class="url_link">
 						{{ long_url }}
 					</p>
@@ -70,7 +70,7 @@
             data: {
                 labels: countries,
                 datasets: [{
-                    //label: countries,
+                    label: 'countries',
                     data: number_of_clicks,
                     backgroundColor: [
                         '#FF6384',
@@ -116,7 +116,7 @@
             data: {
                 labels: browsers,
                 datasets: [{
-                    //label: browsers,
+                    label: 'browsers',
                     data: browser_clicks,
                     backgroundColor: [
                         '#FF6384',

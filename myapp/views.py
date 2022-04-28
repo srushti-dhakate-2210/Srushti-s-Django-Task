@@ -90,7 +90,8 @@ def redirect_url(request,short_url):
     data = resp.json()
     countryname=data["country_name"]
     if(countryname==None):
-        countryname="India"
+        countryname="Unites States"
+    
     #countryname="China"
     #data["country_name"]=countryname
     print(data)
@@ -135,13 +136,15 @@ def url_analytics(request,short_urls):
     row=Meta_Data.objects.filter(new_short_url=short_urls)
     row_url=LongToShort.objects.filter(short_url=short_urls)
     obj_temp=row_url[0]
+    n=len(row)
     
     url_dict={
         "short_url":short_urls,
         "long_url":obj_temp.long_url,
-        "clicks":obj_temp.clicks
+        "clicks":obj_temp.clicks,
+        "last_visit":row[n-1].last_visit
     }
-    
+    print(url_dict["last_visit"])
     url_dict["date"]=obj_temp.date
     country_dict={}
     browser_dict={}
@@ -150,6 +153,10 @@ def url_analytics(request,short_urls):
     set1=set()
     for ele in row:
        cn=ele.country_name
+       if(cn=="United State"):
+        cn="USA"
+       if(cn=="United Kingdom"):
+        cn="UK"
        dn=ele.device_name
        bn=ele.browser_name
        set1.add(cn)
@@ -160,12 +167,7 @@ def url_analytics(request,short_urls):
     
     list1=list(set1)
     url_dict["country_list"]=list1
-    new_dict={
-        "country_dict":country_dict,
-        "device_dict":device_dict,
-        "browser_dict":browser_dict,
-        "url_dict":url_dict
-    }
+    
     
     return render(request,"analytics.html",url_dict)
     
